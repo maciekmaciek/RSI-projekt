@@ -9,12 +9,14 @@ from mpi4py import MPI
 comm = MPI.COMM_WORLD
 rank = comm.Get_rank()
 
-# TODO images adresses
-images = [Image.open("./goku1.jpg"), Image.open("./goku2.jpg"), Image.open("./goku1.jpg"), Image.open("./goku2.jpg"),
-          Image.open("./goku1.jpg"), Image.open("./goku2.jpg"), Image.open("./goku2.jpg")]
-
 if rank == 0:
     start = time.time()
+
+    images = []
+    for img in range(1, 50):
+        img_num = str(img).zfill(4)
+        images.append(Image.open('./img/IMG_{0}.jpg'.format(img_num)))
+
     images_count = images.__len__()
     size = comm.Get_size()
     rank_images = images_count / size
